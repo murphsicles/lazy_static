@@ -1,0 +1,17 @@
+// Auto-converted from /tmp/df-lazy_static-1.5.0/lazy_static-1.5.0/src/core_lazy.rs
+
+// [unsupported item]
+use self::spin::Once;
+pub struct Lazy<T: Sync> {
+ (Once<T>),
+}
+
+impl<T: Sync> Lazy<T> {
+ const INIT: Self = Lazy(Once::INIT);
+ pub fn get(&self, builder: F) -> &T {
+ self.0.call_once(builder)
+ }
+ 
+}
+
+#[macro_export] #[doc(hidden)] macro_rules ! __lazy_static_create { ($ NAME: ident, $ T: ty) => { static $ NAME: $ crate::lazy::Lazy <$ T > = $ crate::lazy::Lazy::INIT; }; }

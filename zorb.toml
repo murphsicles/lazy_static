@@ -1,0 +1,7 @@
+[package]
+name = "@std/lazy_static"
+version = "1.5.0"
+description = "Lazy statics for Zeta — lazy_static! macro for deferred initialization"
+license = "MIT"
+repository = "https://github.com/murphsicles/lazy_static"
+readme = "README.md"

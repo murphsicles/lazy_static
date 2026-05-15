@@ -1,0 +1,26 @@
+// Auto-converted from /tmp/df-lazy_static-1.5.0/lazy_static-1.5.0/src/inline_lazy.rs
+
+// [unsupported item]
+// [unsupported item]
+use self::std::cell::Cell;
+use self::std::mem::MaybeUninit;
+use self::std::prelude::v1::*;
+use self::std::sync::Once;
+#[allow(deprecated)] pub use self::std::sync::ONCE_INIT;
+pub struct Lazy<T: Sync> {
+ (Cell<MaybeUninit<T>>, Once),
+}
+
+impl<T: Sync> Lazy<T> {
+ const INIT: Self = Lazy(Cell::new(MaybeUninit::uninit()), ONCE_INIT);
+ pub fn get(&self, f: F) -> &T {
+ self.1.call_once(| | { self.0.set(MaybeUninit::new(f())); });
+ unsafe { &* (*self.0.as_ptr()).as_ptr() }
+ }
+ 
+}
+
+unsafe impl<T: Sync> Sync for Lazy<T> {
+}
+
+#[macro_export] #[doc(hidden)] macro_rules ! __lazy_static_create { ($ NAME: ident, $ T: ty) => { static $ NAME: $ crate::lazy::Lazy <$ T > = $ crate::lazy::Lazy::INIT; }; }
